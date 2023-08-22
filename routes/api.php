@@ -1,6 +1,10 @@
 <?php
 
+use App\Http\Controllers\AuthorController;
+use App\Http\Controllers\BookController;
+use App\Http\Controllers\DepartmentController;
 use App\Http\Controllers\StudentBorrowBookController;
+use App\Http\Controllers\StudentController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -30,4 +34,51 @@ Route::prefix('v1')->group(function (){
         '/students/{id}/books',
         [StudentBorrowBookController::class, 'getStudentBooks']
     )->name('student-borrowed-book');
+
+    Route::post(
+        '/books',
+        [BookController::class, 'saveBook']
+    )->name('save-book');
+
+    Route::get(
+        '/books',
+        [BookController::class, 'getBooks']
+    )->name('get-book');
+
+    Route::get(
+        '/authors',
+        [AuthorController::class, 'getAuthors']
+    )->name('get-book');
+
+    Route::post(
+        '/authors',
+        [AuthorController::class, 'saveAuthor']
+    )->name('save-author');
+
+    Route::get(
+        '/departments',
+        [DepartmentController::class, 'getDepartments']
+    )->name('get-departments');
+
+    Route::post(
+        '/departments',
+        [DepartmentController::class, 'saveDepartment']
+    )->name('save-departments');
+
+    Route::get(
+        '/students',
+        [StudentController::class, 'getStudents']
+    )->name('get-students');
+
+    Route::post(
+        '/students',
+        [StudentController::class, 'saveStudent']
+    )->name('save-student');
+
+    Route::get(
+        '/books/{book_name}',
+        [BookController::class, 'getBooksByName']
+    )->name('get-books-by-name');
+    
+
 });

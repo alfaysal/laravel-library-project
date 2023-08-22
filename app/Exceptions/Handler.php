@@ -34,31 +34,31 @@ class Handler extends ExceptionHandler
         });
     }
 
-    public function render($request, Throwable $e)
-    {
-        switch($e) {
-            case $e instanceof ModelNotFoundException:
-                return $this->modelNotFoundExceptionResponse($e);
-            case $e instanceof QueryException:
-                return response()->json(['message' => 'Something went wrong', 'success' => false,], 500);
-        }
+    // public function render($request, Throwable $e)
+    // {
+    //     switch($e) {
+    //         case $e instanceof ModelNotFoundException:
+    //             return $this->modelNotFoundExceptionResponse($e);
+    //         case $e instanceof QueryException:
+    //             return response()->json(['message' => 'Something went wrong', 'success' => false,], 500);
+    //     }
 
-        return parent::render($request, $e);
-    }
+    //     return parent::render($request, $e);
+    // }
 
-    protected function modelNotFoundExceptionResponse(ModelNotFoundException $e): Response {
-        switch($e->getModel()) {
-            case Student::class:
-                $type = 'Student';
-                break;
-            default:
-                $type = '';
-                break;
-        }
+    // protected function modelNotFoundExceptionResponse(ModelNotFoundException $e): Response {
+    //     switch($e->getModel()) {
+    //         case Student::class:
+    //             $type = 'Student';
+    //             break;
+    //         default:
+    //             $type = '';
+    //             break;
+    //     }
 
-        return response()->json([
-            'message' => strlen($type) ? sprintf('%s not found', $type) : 'Something went wrong',
-            'success' => false,
-        ], 404);
-    }
+    //     return response()->json([
+    //         'message' => strlen($type) ? sprintf('%s not found', $type) : 'Something went wrong',
+    //         'success' => false,
+    //     ], 404);
+    // }
 }

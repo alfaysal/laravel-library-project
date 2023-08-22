@@ -4,9 +4,13 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\StudentBorrowBookRequest;
 use App\Http\Services\StudentBorrowBookService;
+use App\Models\Author;
+use App\Models\Book;
+use App\Models\Department;
 use App\Models\Student;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Throwable;
 
 class StudentBorrowBookController extends Controller
@@ -20,38 +24,17 @@ class StudentBorrowBookController extends Controller
 
     public function studentBorrowBook(StudentBorrowBookRequest $borrow_request): JsonResponse  
     {
-        try {
-            $this->student_borrow_book_service_obj->borrowBook($borrow_request->validated());
+        $this->student_borrow_book_service_obj->borrowBook($borrow_request->validated());
 
-            return response()->json([
-                'success' => true,
-                'message' => "successfully booked ",
-                'status_code' => 201
-            ]);
-
-        } catch (Throwable $e) {
-
-            return response()->json([
-                'success' => false,
-                'error' => [
-                    'message' => $e->getMessage(),
-                    'status_code' => $e->getCode(),
-                ]
-            ]);
-
-        } catch (\Exception $e) {
-
-            return response()->json([
-                'success' => false,
-                'error' => [
-                    'message' => $e->getMessage(),
-                    'status_code' => $e->getCode()
-                ]
-            ]);
-        }
+        return response()->json([
+            'success' => true,
+            'message' => "successfully booked ",
+            'data' => null,
+            'status_code' => 201
+        ]);
     }
 
-    public function getStudentBooks(Request $request, $student_id)
+    public function getStudentBooks($student_id)
     {
 
         $student = Student::findOrFail($student_id);

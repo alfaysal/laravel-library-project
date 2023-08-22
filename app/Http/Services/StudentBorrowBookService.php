@@ -51,6 +51,11 @@ class StudentBorrowBookService
 
     public function getAllBorrowedBook(int $student_id) : object 
     {
-        return StudentBorrowBook::where('student_id',$student_id)->get();
+        return DB::table('student_borrow_books')
+                    ->join('books','books.id','student_borrow_books.book_id')
+                    ->join('students','students.id','student_borrow_books.student_id')
+                    ->select('student_borrow_books.id','students.name as studentName','books.name as bookName','student_borrow_books.issued_date as issuedDate')
+                    ->where('student_borrow_books.student_id',$student_id)
+                    ->get();
     }
 }
