@@ -2,11 +2,15 @@
 
 namespace App\Console;
 
+use App\Console\Commands\CreateBook;
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
 
 class Kernel extends ConsoleKernel
 {
+    protected $commands = [
+        CreateBook::class
+    ];
     /**
      * Define the application's command schedule.
      */
