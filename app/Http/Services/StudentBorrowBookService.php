@@ -7,6 +7,7 @@ use App\Exceptions\BooksCanNotBeEmptyException;
 use App\Exceptions\BooksNotFoundException;
 use App\Exceptions\MaximumBorrowBookException;
 use App\Exceptions\StudentNotFoundException;
+use App\Jobs\BookStatusUpdateJob;
 use App\Models\Book;
 use App\Models\Student;
 use App\Models\StudentBorrowBook;
@@ -51,6 +52,7 @@ class StudentBorrowBookService
                 }
             });
         }
+        BookStatusUpdateJob::dispatch();
     }
 
     public function getAllBorrowedBook(int $student_id) : object 
