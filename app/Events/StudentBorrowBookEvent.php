@@ -2,6 +2,7 @@
 
 namespace App\Events;
 
+use App\Models\StudentBorrowBook;
 use Illuminate\Broadcasting\Channel;
 use Illuminate\Broadcasting\InteractsWithSockets;
 use Illuminate\Broadcasting\PresenceChannel;
@@ -14,12 +15,13 @@ class StudentBorrowBookEvent
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
+    public $student_borrow_book;
     /**
      * Create a new event instance.
      */
-    public function __construct()
+    public function __construct(StudentBorrowBook $student_borrow_book)
     {
-        //
+        $this->student_borrow_book = $student_borrow_book;
     }
 
     /**

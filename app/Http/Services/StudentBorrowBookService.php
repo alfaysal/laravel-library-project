@@ -2,6 +2,7 @@
 
 namespace App\Http\Services;
 
+use App\Events\StudentBorrowBookEvent;
 use App\Exceptions\BooksCanNotBeEmptyException;
 use App\Exceptions\BooksNotFoundException;
 use App\Exceptions\MaximumBorrowBookException;
@@ -41,9 +42,12 @@ class StudentBorrowBookService
 
             DB::transaction(function() use ($books,$borrow_book_data) {
                 for ($i=0; $i < count($books); $i++) {
-                    if(!$this->saveBorrowedBook($borrow_book_data, $books[$i])){
+                    $student_borrow_book = $this->saveBorrowedBook($borrow_book_data, $books[$i]);
+                    if(!$student_borrow_book){
                         throw new Exception();
                     }
+
+                    StudentBorrowBookEvent::dispatch($student_borrow_book);
                 }
             });
         }
