@@ -2,11 +2,19 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Services\DepartmentService;
 use App\Models\Department;
 use Illuminate\Http\Request;
 
 class DepartmentController extends Controller
 {
+    public DepartmentService $departmentService;
+    
+    public function __construct(DepartmentService $departmentService)
+    {
+        $this->departmentService = $departmentService;
+    }
+
     public function getDepartments(){
         $get_response = Department::all();
 
@@ -19,9 +27,8 @@ class DepartmentController extends Controller
     }
 
     public function saveDepartment(Request $request) {
-        $department = Department::create([
-            "name" => $request->departmentName,
-        ]);
+
+        $department = $this->departmentService->saveDepartment($request->all());
 
         return response()->json([
             'success' => true,
